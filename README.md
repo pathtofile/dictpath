@@ -54,9 +54,13 @@ print(testval["first"]["second"]["animals"][0]["name"])
 animals = testval("first/second/animals")
 print(animals)
 
-# If a middle key is missing, whole thing just returns None:
+# If a any key is missing, whole thing just returns None:
 cars = testval("first/third/cars")
 assert(cars is None)
+
+# To force a keyError, use raise_if_missing:
+# This throws: KeyError: 'third'
+testval("first/third/cars", raise_if_missing=True)
 
 # You can use list indexes to only get certain elements in a nested list
 # prints: 'cat'

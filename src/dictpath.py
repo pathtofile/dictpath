@@ -1,11 +1,13 @@
 from typing import Optional, Any
 
+
 class dictp(dict):
     """
     Provides a simple path-like access to nested dictionary elements
     See README: https://github.com/pathtofile/dictpath
-    
+
     """
+
     def __getitem__(self, key):
         """
         Overload getter to also treat any sub-dicts as dictp
@@ -16,7 +18,14 @@ class dictp(dict):
         else:
             return item
 
-    def __call__(self, path: str, value_if_missing: Optional[Any]=None, drop_missing: bool=False, raw_index: bool=False) -> Optional[Any] :
+    def __call__(
+        self,
+        path: str,
+        value_if_missing: Optional[Any] = None,
+        raise_if_missing: bool = False,
+        drop_missing: bool = False,
+        raw_index: bool = False,
+    ) -> Optional[Any]:
         """
         Lookup subkeys by path
 
@@ -74,39 +83,7 @@ class dictp(dict):
                     node = node[part]
             return node
         except (KeyError, ValueError):
-            return value_if_missing
-
-
-testval = dictp({
-    "first": {
-        "second": {
-            "animals": [
-                {
-                    "type": "cat",
-                    "name": "meow1",
-                    "children": 2
-                },
-                {
-                    "type": "cat",
-                    "name": "meow1",
-                    "children": 4
-                },
-                {
-                    "type": "cat",
-                    "name": "meow1",
-                    "children": 6
-                },
-                {
-                    "type": "dog",
-                    "name": "dog1",
-                    "eye_colour": "blue"
-                },
-                {
-                    "type": "dog",
-                    "name": "dog2",
-                    "eye_colour": "green"
-                },
-            ]
-        }
-    }
-})
+            if raise_if_missing:
+                raise
+            else:
+                return value_if_missing
