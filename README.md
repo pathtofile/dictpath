@@ -83,10 +83,11 @@ testval("first/second/animals/:/eye_colour")
 testval("first/second/animals/:/eye_colour", drop_missing=True)
 
 # You can also set a overide the value if missing:
-# This returns ['unknown', 'unknown', 'unknown', 'blue', 'green']
+# These both return ['unknown', 'unknown', 'unknown', 'blue', 'green']
 testval("first/second/animals/:/eye_colour", value_if_missing="unknown")
+testval("first/second/animals/:/eye_colour", "unknown")
 
-# These both return "no cars"
-testval("first/second/cars", value_if_missing="no cars")
-testval("first/second/cars/0/type", value_if_missing="no cars")
+# These return "no cars"
+testval("first/second/cars", "no cars")
+testval("first/second/cars/0/type", "no cars")
 ```
